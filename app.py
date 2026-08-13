@@ -3,7 +3,7 @@ import pickle
 import streamlit as st
 from curl_cffi import requests
 from curl_cffi.requests.exceptions import RequestException
-
+from huggingface_hub import hf_hub_download
 # --------------------------------------------------
 # PAGE CONFIGURATION
 # --------------------------------------------------
@@ -20,7 +20,14 @@ st.set_page_config(
 # --------------------------------------------------
 
 movies = pickle.load(open("movies.pkl", "rb"))
-similarity = pickle.load(open("similarity.pkl", "rb"))
+
+similarity_path = hf_hub_download(
+    repo_id="LuckyKothari/movie-recommender-files",
+    filename="similarity.pkl",
+    repo_type="model"
+)
+
+similarity = pickle.load(open(similarity_path, "rb"))
 
 
 # --------------------------------------------------
